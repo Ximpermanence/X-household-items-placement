@@ -17,3 +17,5 @@
 
 server:
   port: 8999
+knife4j:
+  enable: true
