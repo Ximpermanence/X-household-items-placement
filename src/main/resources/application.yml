@@ -1,0 +1,19 @@
+﻿spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.173.129:3306/house-item-place?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  redis:
+    host: 192.168.173.129
+    port: 6379
+    password:
+    lettuce:
+      pool:
+        max-active: 10
+        max-wait: 3000
+        max-idle: 10
+        min-idle: 5
+
+server:
+  port: 8999
