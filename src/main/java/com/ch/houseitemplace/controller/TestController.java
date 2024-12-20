@@ -1,4 +1,4 @@
-package com.ch.houseitemplace.web.controller;
+package com.ch.houseitemplace.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,5 +17,11 @@ public class TestController {
     public String testGetSetRedisTemplate() {
         redisTemplate.opsForValue().set("key", "value");
         return redisTemplate.opsForValue().get("key");
+    }
+
+    @GetMapping("mybatis-plus")
+    public String testMybatisPlus() {
+        return "Hello MybatisPlus";
+
     }
 }
