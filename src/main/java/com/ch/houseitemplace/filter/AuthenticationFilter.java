@@ -1,6 +1,7 @@
 package com.ch.houseitemplace.filter;
 
 import com.ch.houseitemplace.auth.RedisAuthenticationService;
+import com.ch.houseitemplace.pojo.LoginUserDetail;
 import com.ch.houseitemplace.util.EnvUtil;
 import com.ch.houseitemplace.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         // dev环境
-        if(envUtil.isDevProfile()){
+        if (envUtil.isDevProfile()) {
             filterChain.doFilter(request, response);
             return;
         }
         // login接口
-        if(request.getRequestURI().equals("/login")){
+        if (request.getRequestURI().equals("/login")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -42,8 +43,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
-            String userInfo = redisService.getUserInfo(token);
-
+            LoginUserDetail userInfo = redisService.getUserInfo(token);
             if (userInfo != null) {
                 // 验证token
                 try {
@@ -59,7 +59,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 response.getWriter().write("Unauthorized");
                 return;
             }
-        }else {
+        } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Unauthorized");
             return;

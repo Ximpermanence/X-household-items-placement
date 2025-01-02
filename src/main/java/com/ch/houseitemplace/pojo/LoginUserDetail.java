@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 public class LoginUserDetail implements UserDetails, CredentialsContainer {
 
-    private String id;
+    private Long id;
 
     private String age;
 
@@ -71,5 +71,18 @@ public class LoginUserDetail implements UserDetails, CredentialsContainer {
     @Override
     public void eraseCredentials() {
         this.password = null;
+    }
+
+    /**
+     * 获取系统用户
+     *
+     * @return
+     */
+    public static LoginUserDetail getSystemUser() {
+        // TODO @Ximepmanence 系统用户不能注册
+        LoginUserDetail loginUserDetail = new LoginUserDetail();
+        loginUserDetail.setUsername("system");
+        loginUserDetail.setId(-1L);
+        return loginUserDetail;
     }
 }

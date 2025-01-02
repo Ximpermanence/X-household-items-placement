@@ -1,5 +1,6 @@
 package com.ch.houseitemplace.web.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.ch.houseitemplace.auth.RedisAuthenticationService;
 import com.ch.houseitemplace.pojo.LoginUserDetail;
 import com.ch.houseitemplace.util.JwtUtil;
@@ -16,35 +17,6 @@ import java.util.Objects;
 @RequestMapping("/")
 public class LoginController {
 
-/*
-    @Resource
-    private RedisAuthenticationService redisAuthenticationService;
-    @Resource
-    private AuthenticationManager authenticationManager;
-
-    @PostMapping("/login")
-    public String loginPage(@RequestBody LoginUserDetail loginUserDetail) {
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUserDetail.getUsername(), loginUserDetail.getPassword());
-        // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        String key = redisAuthenticationService.saveAuthenticationToRedis(authenticate);
-        return key;
-
-    }*/
-
-/*    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        // 如果需要，可以在这里手动校验用户名密码
-        return "home";  // 登录成功后重定向到主页
-    }*/
-
-/*    @Autowired
-    private UserService userService; // 用于获取用户信息
-
-        @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    */
     @Autowired
     private RedisAuthenticationService redisService; // 用于存储token
 
@@ -56,6 +28,7 @@ public class LoginController {
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }*/
+        // TODO 查库 加密密码 转换对象
         LoginUserDetail user = new LoginUserDetail();
         user.setUsername("admin");
         user.setPassword("admin");
@@ -67,7 +40,7 @@ public class LoginController {
         String token = JwtUtil.generateToken(username);
 
         // 存储token和用户信息到Redis
-        redisService.storeToken(token, user.toString());
+        redisService.storeToken(token, JSONUtil.toJsonStr(user));
 
         return token;  // 返回JWT给前端
     }

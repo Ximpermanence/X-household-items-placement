@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 public class MPGenerate {
 
     public static void main(String[] args) {
+
+        String basicPackage = "room";
         FastAutoGenerator.create("jdbc:mysql://192.168.173.129:3306/house-item-place?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&remarks=true&useInformationSchema=true", "root", "root")
                 .globalConfig(builder -> builder
                         .author("Ximpermanence")
@@ -15,12 +17,12 @@ public class MPGenerate {
                         .commentDate("yyyy-MM-dd")
                 )
                 .packageConfig(builder -> builder
-                        .parent("com.ch.houseitemplace")
-                        .entity("pojo.entity")
-                        .mapper("mapper")
-                        .service("service")
-                        .serviceImpl("service.impl")
-                        .xml("mapper.xml")
+                        .parent("com.ch.houseitemplace" + basicPackage)
+                        .entity("pojo.entity" + basicPackage)
+                        .mapper("mapper" + basicPackage)
+                        .service("service" + basicPackage)
+                        .serviceImpl("service.impl" + basicPackage)
+                        .xml("mapper.xml" + basicPackage)
                 )
                 .strategyConfig(builder -> builder
                         .addInclude("user_info")

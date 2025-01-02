@@ -15,7 +15,7 @@ import java.util.List;
 public class TestController {
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     private IUserInfoService userInfoService;

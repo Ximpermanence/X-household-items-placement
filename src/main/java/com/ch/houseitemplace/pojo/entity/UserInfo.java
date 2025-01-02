@@ -3,11 +3,13 @@ package com.ch.houseitemplace.pojo.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * <p>
@@ -20,7 +22,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("user_info")
-public class UserInfo implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class UserInfo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

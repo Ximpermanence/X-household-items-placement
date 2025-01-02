@@ -1,7 +1,11 @@
 package com.ch.houseitemplace.auth;
 
+import cn.hutool.json.JSONUtil;
+import com.ch.houseitemplace.pojo.LoginUserDetail;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class RedisAuthenticationService {
@@ -12,54 +16,6 @@ public class RedisAuthenticationService {
         this.redisTemplate = redisTemplate;
     }
 
-
-/*
-
-    */
-/**
-     * from Redis
-     *//*
-
-    public Authentication getAuthenticationFromRedis(String authorizationKey) {
-        Object authenticationObj = redisTemplate.opsForValue().get(authorizationKey);
-        if (authenticationObj != null) {
-            // 这里需要确保能够将对象反序列化为 Authentication 对象
-            return (Authentication) authenticationObj;
-        }
-        return null;
-    }
-
-    */
-/**
-     * 变成key
-     *//*
-
-    public String extractAuthorizationKey(Authentication authentication) {
-        LoginUserDetail principal = (LoginUserDetail) authentication.getPrincipal();
-        String id = principal.getId();
-        String username = principal.getUsername();
-        String key = SecureUtil.sha1(username) + id;
-        // 提取 Token 或者 Session ID 作为 Redis 中的 Key,此处为什么不用UUID？，反正是作为token,不需要重复
-        return key;
-    }
-
-
-    */
-/**
-     * 存入redis
-     *//*
-
-    public String saveAuthenticationToRedis(Authentication authentication) {
-
-        String key = extractAuthorizationKey(authentication);
-        // 假设 RedisTemplate 配置为使用 JSON 序列化
-        redisTemplate.opsForValue().set(key, authentication, 1, TimeUnit.HOURS);
-        return key;
-    }
-*/
-
-
-
     private static final String TOKEN_PREFIX = "auth_token:";
 
     // 存入Redis
@@ -68,8 +24,10 @@ public class RedisAuthenticationService {
     }
 
     // 从Redis获取用户信息
-    public String getUserInfo(String token) {
-        return (String) redisTemplate.opsForValue().get(TOKEN_PREFIX + token);
+    public LoginUserDetail getUserInfo(String token) {
+        Object o = redisTemplate.opsForValue().get(TOKEN_PREFIX + token);
+
+        return Optional.ofNullable(o).map(t -> JSONUtil.toBean((String) t, LoginUserDetail.class)).orElse(null);
     }
 
     // 删除token

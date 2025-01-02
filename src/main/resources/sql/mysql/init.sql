@@ -14,5 +14,23 @@ CREATE TABLE user_info (
    status ENUM('active', 'inactive', 'suspended') DEFAULT 'active' COMMENT '状态，默认‘active’',
    avatar_url VARCHAR(255) COMMENT '头像URL，选填',
    address TEXT COMMENT '地址，选填',
-   notes TEXT COMMENT '备注，选填'
+   notes TEXT COMMENT '备注，选填',
+   create_time datetime    null comment '创建时间',
+   create_by   varchar(50)         null comment '创建人',
+   update_time datetime    null comment '修改时间',
+   update_by   varchar(50)         null comment '修改人'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户表';
+
+--changeset Ximpermanence:202412301515
+create table room
+(
+    id          int auto_increment,
+    name        varchar(50) not null comment '房间名',
+    description text        null comment '描述',
+    create_time datetime    null comment '创建时间',
+    create_by   varchar(50)         null comment '创建人',
+    update_time datetime    null comment '修改时间',
+    update_by   varchar(50)         null comment '修改人',
+    constraint room_pk
+        primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '房间';
