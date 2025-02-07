@@ -24,13 +24,37 @@ CREATE TABLE user_info (
 --changeset Ximpermanence:202412301515
 create table room
 (
-    id          int auto_increment,
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID，自动递增',
     name        varchar(50) not null comment '房间名',
     description text        null comment '描述',
     create_time datetime    null comment '创建时间',
     create_by   varchar(50)         null comment '创建人',
     update_time datetime    null comment '修改时间',
     update_by   varchar(50)         null comment '修改人',
-    constraint room_pk
-        primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '房间';
+
+--changeset Ximpermanence:202502071647
+create table furniture
+(
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID，自动递增',
+    name        varchar(50) not null comment '家具名',
+    description text        null comment '描述',
+    room_id INT        null comment '房间id',
+    create_time datetime    null comment '创建时间',
+    create_by   varchar(50)         null comment '创建人',
+    update_time datetime    null comment '修改时间',
+    update_by   varchar(50)         null comment '修改人',
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '家具';
+
+create table item
+(
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID，自动递增',
+    name        varchar(50) not null comment '物品名',
+    description text        null comment '描述',
+    room_id INT        null comment '房间id',
+    furniture_id INT        null comment '家具id',
+    create_time datetime    null comment '创建时间',
+    create_by   varchar(50)         null comment '创建人',
+    update_time datetime    null comment '修改时间',
+    update_by   varchar(50)         null comment '修改人',
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '物品';
